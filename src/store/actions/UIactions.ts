@@ -1,0 +1,4 @@
+export const FILTERS_SET = 'FILTERS_SET';
+export const MODAL_OPEN = 'MODAL_OPEN';
+export const MODAL_CLOSE = 'MODAL_CLOSE';
+export const TODAY_TODOS_UPDATE = 'TODAY_TODOS_UPDATE';

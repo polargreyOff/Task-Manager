@@ -1,0 +1,22 @@
+.title {
+    font-size: 48px;
+}
+
+.header {
+    padding: 20px 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+h1 {
+    cursor: pointer;
+}

@@ -1,0 +1,11 @@
+.row {
+    display: flex;
+}
+
+.rowTaskList {
+    flex: 70% 0 1;
+}
+
+.rowTodayTasks {
+    flex: 30% 0 1;
+}

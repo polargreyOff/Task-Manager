@@ -70,6 +70,47 @@ export const UIReducer =
                     todos: true
                 }
             }
+            case ActionTypes.TODAY_TODOS_REQUEST:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    todayTodos: true
+                },
+                errors: {
+                    ...state.errors,
+                    todayTodos: false
+                },
+                loaded: {
+                    todayTodos: false
+                }
+            }
+        case ActionTypes.TODAY_TODOS_SUCCESS:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    todayTodos: false
+                },
+                loaded: {
+                    todayTodos: true
+                }
+            }
+        case ActionTypes.TODAY_TODOS_FAILURE:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    todayTodos: false
+                },
+                errors: {
+                    ...state.errors,
+                    todayTodos: true
+                },
+                loaded: {
+                    todayTodos: false
+                }
+            }
         default:
              return state
     }

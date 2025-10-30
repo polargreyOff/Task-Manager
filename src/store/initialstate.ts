@@ -3,18 +3,20 @@ import { IRootState } from "../types/types";
 export const initialState: IRootState ={
     todos: [],
     groups: [],
-    currentState: {
-        selectedGroupId: "",
-        todayTodos: [],
-    },
+    todayTodos: [],
     UIstate: {
+        loaded: {
+            todayTodos: false
+        },
         loading: {
             groups: false,
             todos: false,
+            todayTodos: false
         },
         errors: {
             groups: false,
-            todos: false
+            todos: false,
+            todayTodos: false
         },
         filters: {
             todos: {

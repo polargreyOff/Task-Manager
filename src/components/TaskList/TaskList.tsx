@@ -18,24 +18,18 @@ const TaskList = () => {
 
     if (loading) {
         return (
-            <div className="container">
                 <Preloader/>
-            </div>
         )
     }
     if (error) {
         return (
-            <div className="container">
                 <h1>Произошла ошибка</h1>
-            </div>
         )
     }
     return (
-        <div className="container">
             <ul className={styles.row}>
             {groups.map(group => (<TaskItem key={group.id} {...group}/>))}
             </ul>
-        </div>
         
     )
 }

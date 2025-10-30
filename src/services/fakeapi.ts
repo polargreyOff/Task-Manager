@@ -164,6 +164,25 @@ export const getTodosRequest = async (id: string): Promise<ApiResponse<TodosResp
   );
 };
 
+export const getTodayTodosRequest = async (): Promise<ApiResponse<TodosResponse>> => {
+  return await new Promise((resolve) =>
+    setTimeout(() => {
+      const today = new Date().toDateString();
+      const todayTodos = mockTodos.filter(todo => {
+        const todoDate = new Date(todo.date).toDateString();
+        return todoDate === today;
+      });
+      console.log(todayTodos);
+      resolve({
+        success: true,
+        data: {
+          todos: todayTodos
+        }
+      });
+    }, 1200)
+  );
+};
+
 // export const createGroupRequest = async (groupData: Omit<IGroup, 'id' | 'createdAt'>): Promise<ApiResponse<GroupResponse>> => {
 //   return await new Promise((resolve) =>
 //     setTimeout(() => {

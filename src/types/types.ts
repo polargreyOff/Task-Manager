@@ -39,6 +39,11 @@ export enum ActionTypes {
     TODO_TOGGLE_SUCCESS = 'TODO_TOGGLE_SUCCESS',
     TODO_TOGGLE_FAILURE = 'TODO_TOGGLE_FAILURE',
 
+    // today todos
+    TODAY_TODOS_REQUEST = "TODAY_TODOS_REQUEST",
+    TODAY_TODOS_SUCCESS = "TODAY_TODOS_SUCCESS",
+    TODAY_TODOS_FAILURE = "TODAY_TODOS_FAILURE",
+
     // UI
     FILTERS_SET = 'FILTERS_SET',
     MODAL_OPEN = 'MODAL_OPEN',
@@ -69,10 +74,15 @@ export interface IuiState {
     loading: {
         groups: boolean;
         todos: boolean;
+        todayTodos: boolean;
+    },
+    loaded: {
+        todayTodos: boolean;
     }
     errors: {
         groups: boolean;
         todos: boolean;
+        todayTodos: boolean;
     }
     filters: {
         todos: {
@@ -89,14 +99,11 @@ export interface IuiState {
     };
 }
 
-export interface ICurrentState {
-    selectedGroupId: string | null;
-    todayTodos: ITodo[];
-}
+
 
 export interface IRootState {
     todos: ITodo[];
     groups: IGroup[];
-    currentState: ICurrentState;
+    todayTodos: ITodo[];
     UIstate: IuiState
 }

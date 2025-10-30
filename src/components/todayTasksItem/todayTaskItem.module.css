@@ -1,0 +1,10 @@
+.todoItem {
+    background: #27253c;
+    padding: 10px 0 10px 20px;
+}
+
+.borderRadius {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}

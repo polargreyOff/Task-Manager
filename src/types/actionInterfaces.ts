@@ -27,6 +27,19 @@ interface TodosLoadFailure {
     type: ActionTypes.TODOS_LOAD_FAILURE;
 }
 
+interface TodayTodosLoadRequest {
+    type: ActionTypes.TODAY_TODOS_REQUEST
+}
+
+interface TodayTodosLoadSuccess {
+    type: ActionTypes.TODAY_TODOS_SUCCESS,
+    payload: ITodo[]
+}
+
+interface TodayTodosLoadFailure {
+    type: ActionTypes.TODAY_TODOS_FAILURE
+}
+
 export type Action = 
   GroupsLoadSuccessAction 
 | GroupsLoadRequestAction
@@ -34,3 +47,6 @@ export type Action =
 | TodosLoadRequest
 | TodosLoadSuccess
 | TodosLoadFailure
+| TodayTodosLoadFailure
+| TodayTodosLoadRequest
+| TodayTodosLoadSuccess

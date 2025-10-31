@@ -24,7 +24,7 @@ export const initialState: IRootState ={
             todos: {
                 completed: "all",
                 priority: "all",
-                sortBy: "createdAt",
+                sortBy: "date",
                 sortOrder:"asc"
             }
         },

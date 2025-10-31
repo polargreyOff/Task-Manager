@@ -39,6 +39,7 @@ export enum ActionTypes {
 
     // UI
     FILTERS_SET = 'FILTERS_SET',
+    FILTERS_RESET = 'FILTERS_RESET',
     MODAL_OPEN = 'MODAL_OPEN',
     MODAL_CLOSE = 'MODAL_CLOSE',
     TODAY_TODOS_UPDATE = 'TODAY_TODOS_UPDATE',
@@ -83,7 +84,7 @@ export interface IuiState {
         todos: {
             completed: 'all' | 'active' | 'completed';
             priority: 'all' | 'low' | 'medium' | 'high';
-            sortBy: 'priority' | 'createdAt';
+            sortBy?: 'priority' | 'date';
             sortOrder: 'asc' | 'desc';
         };
     };

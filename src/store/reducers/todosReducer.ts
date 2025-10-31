@@ -11,11 +11,14 @@ export const todosReducer =
                         ? { ...todo, completed: !todo.completed }
                         : todo
                 );
+            case ActionTypes.TODO_DELETE_SUCCESS:
+                return [...state.filter(todo => todo.id !== action.payload)]
 
             case ActionTypes.TODOS_LOAD_SUCCESS:
                 const existingIds = new Set(state.map(todo => todo.id));
                 const uniqueNewTodos = action.payload.filter(todo => !existingIds.has(todo.id));
                 return [...state, ...uniqueNewTodos];
+                
             case ActionTypes.TODO_CREATE_SUCCESS:
                 return [...state, action.payload]
             default:

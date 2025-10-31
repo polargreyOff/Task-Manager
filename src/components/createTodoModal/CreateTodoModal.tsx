@@ -120,8 +120,9 @@ export const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Дедлайн</label>
+                            <label htmlFor='dueDate'>Дедлайн</label>
                             <input
+                                id="dueDate"
                                 type="date"
                                 value={dueDate}
                                 onChange={(e) => setDueDate(e.target.value)}

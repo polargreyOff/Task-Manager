@@ -18,7 +18,6 @@ export const TaskItem: FC<IGroup> = ({ title, color, id }) => {
             <div className={styles.row__content} style={gradientStyle}>
                 <div className={styles.row__title}>
                     <h2>{title}</h2>
-                    <p>доступно задач: 5</p>
                 </div>
             </div>
         </div>

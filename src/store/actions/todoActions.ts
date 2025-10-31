@@ -4,6 +4,7 @@ import { AppThunk } from "..";
 import { getTodosRequest } from "../../services/fakeapi";
 import { createTodoRequest } from "../../services/fakeapi";
 import { ModalClose } from "./UIactions";
+import { deleteTodoRequest } from "../../services/fakeapi";
 
 export const TodoToggle = (id: string): Action => ({
     type: ActionTypes.TODO_TOGGLE,
@@ -36,6 +37,30 @@ export const TodoCreateFailure = (): Action => ({
     type: ActionTypes.TODO_CREATE_FAILURE
 })
 
+export const TodoDeleteRequest = (): Action => ({
+    type: ActionTypes.TODO_DELETE_REQUEST
+})
+export const TodoDeleteSuccess = (todoId: string): Action => ({
+    type: ActionTypes.TODO_DELETE_SUCCESS,
+    payload: todoId
+})
+export const TodoDeleteFailure = (): Action => ({
+    type: ActionTypes.TODO_DELETE_FAILURE
+})
+
+export const deleteTodo = (todoId: string): AppThunk => async (dispatch) => {
+    dispatch(TodoDeleteRequest());
+    try {
+        const response = await deleteTodoRequest(todoId);
+        if (response.success) {
+            dispatch(TodoDeleteSuccess(todoId));
+        } else {
+            dispatch(TodoDeleteFailure());
+        }
+    } catch(e) {
+        dispatch(TodoDeleteFailure());
+    }
+}
 
 export const createTodo = (todoData: Omit<ITodo, 'id'>): AppThunk => async (dispatch) => {
     dispatch(TodoCreateRequest());

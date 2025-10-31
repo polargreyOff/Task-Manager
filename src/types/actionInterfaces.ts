@@ -53,6 +53,20 @@ interface TodoCreateFailure {
     type: ActionTypes.TODO_CREATE_FAILURE
 }
 
+interface TodoDeleteRequest {
+    type: ActionTypes.TODO_DELETE_REQUEST
+}
+
+interface TodoDeleteSuccess {
+    type: ActionTypes.TODO_DELETE_SUCCESS,
+    payload: string
+}
+
+interface TodoDeleteFailure {
+    type: ActionTypes.TODO_DELETE_FAILURE
+}
+
+
 interface ModalOpen {
     type: ActionTypes.MODAL_OPEN,
     payload: string
@@ -66,6 +80,18 @@ interface ModalClose {
 interface TodoToggle {
     type: ActionTypes.TODO_TOGGLE,
     payload: string
+}
+
+interface FilterSet {
+    type: ActionTypes.FILTERS_SET,
+    payload: {
+        filterType: string,
+        value: string
+    }
+}
+
+interface FilterReset {
+    type: ActionTypes.FILTERS_RESET
 }
 
 export type Action = 
@@ -84,3 +110,8 @@ export type Action =
 | ModalClose
 | ModalOpen
 | TodoToggle
+| TodoDeleteRequest
+| TodoDeleteSuccess
+| TodoDeleteFailure
+| FilterSet
+| FilterReset

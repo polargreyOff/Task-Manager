@@ -13,7 +13,8 @@
 }
 
 .modal {
-    background: white;
+    background: var(--secondary-bg-color);
+    color: #fff;
     padding: 2rem;
     border-radius: 8px;
     width: 90%;
@@ -40,6 +41,8 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
+    background-color: var(--main-bg-color);
+    color: #fff;
 }
 
 /* Стили для строки с приоритетом и датой */

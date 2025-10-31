@@ -1,8 +1,11 @@
-import { FC } from "react";
+import { FC, ReactEventHandler } from "react";
 import { ITodo } from "../../types/types";
 import styles from "./TodoItem.module.css"
 import { useAppDispatch } from "../../hooks/hooks";
 import { TodoToggle } from "../../store/actions/todoActions";
+import { toggleTodoRequest } from "../../services/fakeapi";
+import { deleteTodo } from "../../store/actions/todoActions";
+import { fetchTodayTodos } from "../../store/actions/todayTodosActions";
 
 const TodoItem: FC<ITodo> = ({ id, title, description, priority, date, completed, color }) => {
     const correctDate = new Date(date).toLocaleString('ru-RU', {
@@ -11,15 +14,24 @@ const TodoItem: FC<ITodo> = ({ id, title, description, priority, date, completed
         day: 'numeric',
     });
     const dispatch = useAppDispatch()
-    const handleClick = (id: string) => {
-        dispatch(TodoToggle(id))
+    const handleToggle = (id: string) => {
+        dispatch(TodoToggle(id));
+        toggleTodoRequest(id);
+    }
+
+    const handleDelete = (event: React.MouseEvent, id: string) => {
+        event.stopPropagation();
+        if (window.confirm(`Удалить задачу ${title}?`)) {
+            dispatch(deleteTodo(id));
+            dispatch(fetchTodayTodos());
+        }
     }
 
     const gradientStyle = {
         background: `linear-gradient(135deg, ${color} 0%, ${color}40 100%)`,
     };
     return (
-        <div onClick={() => { handleClick(id) }} style={gradientStyle} className={styles.item}>
+        <div onClick={() => { handleToggle(id) }} style={gradientStyle} className={styles.item}>
             <div className={styles.row}>
                 <div className={styles.info}>
                     <div className={`${styles.text} ${completed ? styles.completed : ''}`}>
@@ -35,7 +47,7 @@ const TodoItem: FC<ITodo> = ({ id, title, description, priority, date, completed
                     <h2>приоритет: {priority}</h2>
                     {completed && (
                         <div>
-                            <button className={styles.deleteButton}>Удалить</button>
+                            <button onClick={(e)=> {handleDelete(e,id)}} className={styles.deleteButton}>Удалить</button>
                         </div>
                     )}
                 </div>

@@ -1,0 +1,118 @@
+.filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  background-color: #2a283f;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.select {
+  position: relative;
+  min-width: 200px;
+}
+
+.select select {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #2a283f;
+  border-radius: 6px;
+  background-color: var(--main-bg-color);
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.select select:hover {
+  border-color: #4dabf7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.select select:focus {
+  outline: none;
+  border-color: #339af0;
+  box-shadow: 0 0 0 3px rgba(51, 154, 240, 0.1);
+}
+
+/* Кастомная стрелка для select */
+.select::after {
+  content: "▼";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: #666;
+  pointer-events: none;
+}
+
+.radio {
+  display: flex;
+  gap: 8px;
+}
+
+.radio button {
+  padding: 10px 16px;
+  border: 1px solid #2a283f;
+  border-radius: 6px;
+  background-color: var(--main-bg-color);
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 50px;
+}
+
+.radio button:hover {
+  background-color: #2a283f;
+  border-color: #4dabf7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.radio button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.radio button:focus {
+  outline: none;
+  border-color: #339af0;
+  box-shadow: 0 0 0 3px rgba(51, 154, 240, 0.1);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .select {
+    min-width: 100%;
+  }
+  
+  .radio {
+    width: 100%;
+  }
+  
+  .radio button {
+    flex: 1;
+  }
+}
+
+/* Дополнительные стили для лучшего визуального восприятия */
+.select select option {
+  padding: 8px;
+}
+
+/* Стиль для активного состояния кнопки сортировки */
+.radio button.active {
+  background-color: var(--main-bg-color);
+  color: white;
+}

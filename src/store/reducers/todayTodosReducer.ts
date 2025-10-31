@@ -7,9 +7,7 @@ export const TodayTodosReducer =
         switch (action.type) {
 
             case ActionTypes.TODAY_TODOS_SUCCESS:
-                const existingIds = new Set(state.map(todo => todo.id));
-                const uniqueNewTodos = action.payload.filter(todo => !existingIds.has(todo.id));
-                return [...state, ...uniqueNewTodos];
+                return [...action.payload]
             default:
                 return state
         }

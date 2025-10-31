@@ -160,6 +160,25 @@ export const UIReducer =
                     [action.payload]: false,
                 }
             }
+        case ActionTypes.FILTERS_SET:
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    todos: {
+                        ...state.filters.todos,
+                        [action.payload.filterType]: action.payload.value
+                    }
+                }
+            }
+        case ActionTypes.FILTERS_RESET:
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    todos: initialState.UIstate.filters.todos
+                }
+            }
         default:
              return state
     }

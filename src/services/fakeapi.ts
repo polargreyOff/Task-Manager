@@ -172,7 +172,6 @@ export const getTodayTodosRequest = async (): Promise<ApiResponse<TodosResponse>
         const todoDate = new Date(todo.date).toDateString();
         return todoDate === today;
       });
-      console.log(todayTodos);
       resolve({
         success: true,
         data: {
@@ -198,6 +197,55 @@ export const createTodoRequest = async (todoData: Omit<ITodo, 'id'>): Promise<Ap
         message: 'Todo created successfully'
       });
     }, 800)
+  );
+};
+
+export const deleteTodoRequest = async (todoId: string): Promise<ApiResponse<{success: boolean}>> => {
+  return await new Promise((resolve, reject) =>
+    setTimeout(() => {
+        const todoIndex = mockTodos.findIndex(todo => todo.id === todoId);
+        if (todoIndex !== -1) {
+          mockTodos.splice(todoIndex, 1);
+        }
+        
+        resolve({
+          success: true,
+          data: {success: true},
+          message: 'Todo deleted successfully'
+        });
+
+        reject({
+          success: false, 
+          error: 'Todo not found'
+        });
+    }, 500)
+  );
+};
+
+
+export const toggleTodoRequest = async (todoId: string): Promise<ApiResponse<TodoResponse>> => {
+  return await new Promise((resolve, reject) =>
+    setTimeout(() => {
+      const todoIndex = mockTodos.findIndex(t => t.id === todoId);
+      if (todoIndex !== -1) {
+        const updatedTodo: ITodo = {
+          ...mockTodos[todoIndex],
+          completed: !mockTodos[todoIndex].completed,
+        };
+        mockTodos[todoIndex] = updatedTodo;
+        
+        resolve({
+          success: true,
+          data: { todo: updatedTodo },
+          message: 'Todo toggled successfully'
+        });
+      } else {
+        reject({
+          success: false, 
+          error: 'Todo not found'
+        });
+      }
+    }, 500)
   );
 };
 
@@ -246,32 +294,5 @@ export const createTodoRequest = async (todoData: Omit<ITodo, 'id'>): Promise<Ap
 //         });
 //       }
 //     }, 800)
-//   );
-// };
-
-// export const toggleTodoRequest = async (todoId: string): Promise<ApiResponse<TodoResponse>> => {
-//   return await new Promise((resolve, reject) =>
-//     setTimeout(() => {
-//       const todoIndex = mockTodos.findIndex(t => t.id === todoId);
-//       if (todoIndex !== -1) {
-//         const updatedTodo: Todo = {
-//           ...mockTodos[todoIndex],
-//           completed: !mockTodos[todoIndex].completed,
-//           updatedAt: new Date().toISOString(),
-//         };
-//         mockTodos[todoIndex] = updatedTodo;
-        
-//         resolve({
-//           success: true,
-//           data: { todo: updatedTodo },
-//           message: 'Todo toggled successfully'
-//         });
-//       } else {
-//         reject({
-//           success: false, 
-//           error: 'Todo not found'
-//         });
-//       }
-//     }, 500)
 //   );
 // };

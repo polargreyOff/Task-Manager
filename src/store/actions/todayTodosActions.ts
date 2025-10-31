@@ -17,10 +17,12 @@ export const TodayTodosLoadFailure = (): Action => ({
 })
 
 export const fetchTodayTodos = (): AppThunk => async (dispatch) => {
+    console.log("fetch todayTodos")
     dispatch(TodayTodosLoadRequest());
     try {
         const response = await getTodayTodosRequest();
         if (response.success) {
+            console.log(response.data.todos)
             dispatch(TodayTodosLoadSuccess(response.data.todos));
         } else {
             dispatch(TodayTodosLoadFailure());

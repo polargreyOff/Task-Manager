@@ -70,7 +70,7 @@ export const UIReducer =
                     todos: true
                 }
             }
-            case ActionTypes.TODAY_TODOS_REQUEST:
+        case ActionTypes.TODAY_TODOS_REQUEST:
             return {
                 ...state,
                 loading: {
@@ -109,6 +109,55 @@ export const UIReducer =
                 },
                 loaded: {
                     todayTodos: false
+                }
+            }
+        case ActionTypes.TODO_CREATE_REQUEST:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    createTodo: true
+                },
+                errors: {
+                    ...state.errors,
+                    createTodo: false
+                }
+            }
+        case ActionTypes.TODO_CREATE_SUCCESS:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    createTodo: false
+                }
+            }
+        case ActionTypes.TODO_CREATE_FAILURE:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    createTodo: false
+                },
+                errors: {
+                    ...state.errors,
+                    createTodo: true
+                }
+            }
+        case ActionTypes.MODAL_OPEN:
+            console.log(state);
+            return {
+                ...state,
+                modals: {
+                    ...state.modals,
+                    [action.payload]: true,
+                }
+            }
+        case ActionTypes.MODAL_CLOSE:
+            return {
+                ...state,
+                modals: {
+                    ...state.modals,
+                    [action.payload]: false,
                 }
             }
         default:

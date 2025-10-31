@@ -1,0 +1,20 @@
+.addTodo {
+    text-align: center;
+}
+
+.addTodoButton {
+    display: inline-block;
+    font-size: 28px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 0 40px;
+    line-height: 2;
+    border: 2px solid #fff;
+    transition-duration: 100ms;
+    margin-bottom: 40px;
+}
+
+.addTodoButton:hover {
+    background: transparent;
+    color: #fff;
+}

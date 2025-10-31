@@ -11,12 +11,14 @@ export const initialState: IRootState ={
         loading: {
             groups: false,
             todos: false,
-            todayTodos: false
+            todayTodos: false,
+            createTodo: false,
         },
         errors: {
             groups: false,
             todos: false,
-            todayTodos: false
+            todayTodos: false,
+            createTodo: false,
         },
         filters: {
             todos: {

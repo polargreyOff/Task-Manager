@@ -1,5 +1,5 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin: -30px;
+    margin:-30px;
 }

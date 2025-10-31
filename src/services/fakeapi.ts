@@ -183,6 +183,24 @@ export const getTodayTodosRequest = async (): Promise<ApiResponse<TodosResponse>
   );
 };
 
+export const createTodoRequest = async (todoData: Omit<ITodo, 'id'>): Promise<ApiResponse<TodoResponse>> => {
+  return await new Promise((resolve) =>
+    setTimeout(() => {
+      const newTodo: ITodo = {
+        ...todoData,
+        id: `todo-${Date.now()}`,
+      };
+      mockTodos.push(newTodo);
+      
+      resolve({
+        success: true,
+        data: { todo: newTodo },
+        message: 'Todo created successfully'
+      });
+    }, 800)
+  );
+};
+
 // export const createGroupRequest = async (groupData: Omit<IGroup, 'id' | 'createdAt'>): Promise<ApiResponse<GroupResponse>> => {
 //   return await new Promise((resolve) =>
 //     setTimeout(() => {
@@ -203,26 +221,6 @@ export const getTodayTodosRequest = async (): Promise<ApiResponse<TodosResponse>
 // };
 
 // Todos API  
-
-// export const createTodoRequest = async (todoData: Omit<ITodo, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<TodoResponse>> => {
-//   return await new Promise((resolve) =>
-//     setTimeout(() => {
-//       const newTodo: ITodo = {
-//         ...todoData,
-//         id: `todo-${Date.now()}`,
-//         createdAt: new Date().toISOString(),
-//         updatedAt: new Date().toISOString(),
-//       };
-//       mockTodos.push(newTodo);
-      
-//       resolve({
-//         success: true,
-//         data: { todo: newTodo },
-//         message: 'Todo created successfully'
-//       });
-//     }, 800)
-//   );
-// };
 
 // export const updateTodoRequest = async (todoId: string, updates: Partial<Todo>): Promise<ApiResponse<TodoResponse>> => {
 //   return await new Promise((resolve, reject) =>

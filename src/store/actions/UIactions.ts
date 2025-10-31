@@ -1,4 +1,12 @@
-export const FILTERS_SET = 'FILTERS_SET';
-export const MODAL_OPEN = 'MODAL_OPEN';
-export const MODAL_CLOSE = 'MODAL_CLOSE';
-export const TODAY_TODOS_UPDATE = 'TODAY_TODOS_UPDATE';
+import { Action } from "../../types/actionInterfaces"
+import { ActionTypes } from "../../types/types"
+
+export const ModalOpen = (modal: string): Action => ({
+    type: ActionTypes.MODAL_OPEN,
+    payload: modal
+})
+
+export const ModalClose = (modal: string): Action => ({
+    type: ActionTypes.MODAL_CLOSE,
+    payload: modal
+})

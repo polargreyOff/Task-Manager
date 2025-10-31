@@ -27,17 +27,10 @@ export enum ActionTypes {
     TODO_CREATE_SUCCESS = 'TODO_CREATE_SUCCESS',
     TODO_CREATE_FAILURE = 'TODO_CREATE_FAILURE',
 
-    TODO_UPDATE_REQUEST = 'TODO_UPDATE_REQUEST',
-    TODO_UPDATE_SUCCESS = 'TODO_UPDATE_SUCCESS',
-    TODO_UPDATE_FAILURE = 'TODO_UPDATE_FAILURE',
-
     TODO_DELETE_REQUEST = 'TODO_DELETE_REQUEST',
     TODO_DELETE_SUCCESS = 'TODO_DELETE_SUCCESS',
     TODO_DELETE_FAILURE = 'TODO_DELETE_FAILURE',
-
-    TODO_TOGGLE_REQUEST = 'TODO_TOGGLE_REQUEST',
-    TODO_TOGGLE_SUCCESS = 'TODO_TOGGLE_SUCCESS',
-    TODO_TOGGLE_FAILURE = 'TODO_TOGGLE_FAILURE',
+    TODO_TOGGLE = 'TODO_TOGGLE',
 
     // today todos
     TODAY_TODOS_REQUEST = "TODAY_TODOS_REQUEST",
@@ -75,6 +68,7 @@ export interface IuiState {
         groups: boolean;
         todos: boolean;
         todayTodos: boolean;
+        createTodo: boolean;
     },
     loaded: {
         todayTodos: boolean;
@@ -83,6 +77,7 @@ export interface IuiState {
         groups: boolean;
         todos: boolean;
         todayTodos: boolean;
+        createTodo: boolean;
     }
     filters: {
         todos: {

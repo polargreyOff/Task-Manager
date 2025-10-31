@@ -3,6 +3,11 @@
     border-radius: 10px;
     padding: 20px;
     cursor: pointer;
+    transition-duration: 100ms;
+}
+
+.item:hover {
+    transform: translateY(10px);
 }
 
 h2 {
@@ -21,4 +26,28 @@ h2 {
 
 .date {
     font-size: 14px;
+}
+
+.text.completed {
+    text-decoration: line-through;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deleteButton {
+    font-size: 20px;
+    line-height: 2;
+    padding: 0 40px;
+    color: #fff;
+    background: red;
+    border-radius: 10px;
+    transition-duration: 100ms;
+}
+
+.deleteButton:hover {
+    background: #fff;
+    color: red;
 }

@@ -40,6 +40,34 @@ interface TodayTodosLoadFailure {
     type: ActionTypes.TODAY_TODOS_FAILURE
 }
 
+interface TodoCreateRequest {
+    type: ActionTypes.TODO_CREATE_REQUEST
+}
+
+interface TodoCreateSuccess {
+    type: ActionTypes.TODO_CREATE_SUCCESS,
+    payload: ITodo
+}
+
+interface TodoCreateFailure {
+    type: ActionTypes.TODO_CREATE_FAILURE
+}
+
+interface ModalOpen {
+    type: ActionTypes.MODAL_OPEN,
+    payload: string
+}
+
+interface ModalClose {
+    type: ActionTypes.MODAL_CLOSE,
+    payload: string
+}
+
+interface TodoToggle {
+    type: ActionTypes.TODO_TOGGLE,
+    payload: string
+}
+
 export type Action = 
   GroupsLoadSuccessAction 
 | GroupsLoadRequestAction
@@ -50,3 +78,9 @@ export type Action =
 | TodayTodosLoadFailure
 | TodayTodosLoadRequest
 | TodayTodosLoadSuccess
+| TodoCreateRequest
+| TodoCreateFailure
+| TodoCreateSuccess
+| ModalClose
+| ModalOpen
+| TodoToggle

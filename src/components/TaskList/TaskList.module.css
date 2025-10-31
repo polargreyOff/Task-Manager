@@ -3,3 +3,17 @@
     flex-wrap: wrap;
     margin:-30px;
 }
+
+.input {
+    margin-bottom: 40px;
+}
+
+.input input {
+    width: 50%;
+    font-size: 20px;
+    line-height: 2.5;
+    padding-left: 10px;
+    border-radius: 10px;
+    background-color: var(--secondary-bg-color);
+    color: #fff;
+}

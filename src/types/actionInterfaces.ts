@@ -53,6 +53,19 @@ interface TodoCreateFailure {
     type: ActionTypes.TODO_CREATE_FAILURE
 }
 
+interface GroupCreateRequest {
+    type: ActionTypes.GROUP_CREATE_REQUEST
+}
+
+interface GroupCreateSuccess {
+    type: ActionTypes.GROUP_CREATE_SUCCESS
+    payload: IGroup
+}
+
+interface GroupCreateFailure {
+    type: ActionTypes.GROUP_CREATE_FAILURE
+}
+
 interface TodoDeleteRequest {
     type: ActionTypes.TODO_DELETE_REQUEST
 }
@@ -66,6 +79,18 @@ interface TodoDeleteFailure {
     type: ActionTypes.TODO_DELETE_FAILURE
 }
 
+interface GroupDeleteRequest {
+    type: ActionTypes.GROUP_DELETE_REQUEST
+}
+
+interface GroupDeleteSuccess {
+    type: ActionTypes.GROUP_DELETE_SUCCESS,
+    payload: string
+}
+
+interface GroupDeleteFailure {
+    type: ActionTypes.GROUP_DELETE_FAILURE
+}
 
 interface ModalOpen {
     type: ActionTypes.MODAL_OPEN,
@@ -115,3 +140,9 @@ export type Action =
 | TodoDeleteFailure
 | FilterSet
 | FilterReset
+| GroupCreateRequest
+| GroupCreateSuccess
+| GroupCreateFailure
+| GroupDeleteRequest
+| GroupDeleteSuccess
+| GroupDeleteFailure

@@ -143,6 +143,38 @@ export const UIReducer =
                     createTodo: true
                 }
             }
+        case ActionTypes.GROUP_CREATE_REQUEST:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    createGroup: true
+                },
+                errors: {
+                    ...state.errors,
+                    createTodo: false
+                }
+            }
+        case ActionTypes.GROUP_CREATE_SUCCESS:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    createGroup: false
+                }
+            }
+        case ActionTypes.GROUP_CREATE_FAILURE:
+            return {
+                ...state,
+                loading: {
+                    ...state.loading,
+                    createGroup: false
+                },
+                errors: {
+                    ...state.errors,
+                    createGroup: true
+                }
+            }
         case ActionTypes.MODAL_OPEN:
             console.log(state);
             return {

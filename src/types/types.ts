@@ -8,10 +8,6 @@ export enum ActionTypes {
     GROUP_CREATE_SUCCESS = 'GROUP_CREATE_SUCCESS',
     GROUP_CREATE_FAILURE = 'GROUP_CREATE_FAILURE',
 
-    GROUP_UPDATE_REQUEST = 'GROUP_UPDATE_REQUEST',
-    GROUP_UPDATE_SUCCESS = 'GROUP_UPDATE_SUCCESS',
-    GROUP_UPDATE_FAILURE = 'GROUP_UPDATE_FAILURE',
-
     GROUP_DELETE_REQUEST = 'GROUP_DELETE_REQUEST',
     GROUP_DELETE_SUCCESS = 'GROUP_DELETE_SUCCESS',
     GROUP_DELETE_FAILURE = 'GROUP_DELETE_FAILURE',
@@ -70,6 +66,7 @@ export interface IuiState {
         todos: boolean;
         todayTodos: boolean;
         createTodo: boolean;
+        createGroup: boolean;
     },
     loaded: {
         todayTodos: boolean;
@@ -79,6 +76,7 @@ export interface IuiState {
         todos: boolean;
         todayTodos: boolean;
         createTodo: boolean;
+        createGroup: boolean;
     }
     filters: {
         todos: {

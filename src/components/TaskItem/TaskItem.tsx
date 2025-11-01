@@ -12,10 +12,11 @@ export const TaskItem: FC<IGroup> = ({ title, color, id }) => {
         border: `1px solid ${color}40`
     };
     return (
-        <div 
-        onClick={()=> {navigate(`/todolist/${id}`)}}
-        className={styles.row__item}>
-            <div className={styles.row__content} style={gradientStyle}>
+        <div className={styles.row__item}>
+            <div
+            onClick={()=> {navigate(`/todolist/${id}`)}}
+             className={styles.row__content}
+              style={gradientStyle}>
                 <div className={styles.row__title}>
                     <h2>{title}</h2>
                 </div>

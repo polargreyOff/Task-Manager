@@ -13,12 +13,14 @@ export const initialState: IRootState ={
             todos: false,
             todayTodos: false,
             createTodo: false,
+            createGroup: false
         },
         errors: {
             groups: false,
             todos: false,
             todayTodos: false,
             createTodo: false,
+            createGroup: false
         },
         filters: {
             todos: {

@@ -1,7 +1,8 @@
 import { AppThunk } from "..";
-import { getGroupsRequest } from "../../services/fakeapi";
+import { createGroupRequest, getGroupsRequest } from "../../services/fakeapi";
 import { Action } from "../../types/actionInterfaces";
 import { ActionTypes, IGroup } from "../../types/types";
+import { ModalClose } from "./UIactions";
 
 export const groupsLoadRequest = (): Action => ({
     type: ActionTypes.GROUPS_LOAD_REQUEST
@@ -16,6 +17,45 @@ export const groupsLoadFailure = (): Action => ({
     type: ActionTypes.GROUPS_LOAD_FAILURE
 })
 
+export const GroupCreateRequest = (): Action => ({
+    type: ActionTypes.GROUP_CREATE_REQUEST
+})
+
+export const GroupCreateSuccess = (group: IGroup): Action => ({
+    type: ActionTypes.GROUP_CREATE_SUCCESS,
+    payload: group
+})
+
+export const GroupCreateFailure = (): Action => ({
+    type: ActionTypes.GROUP_CREATE_FAILURE
+})
+
+export const GroupDeleteRequest = (): Action => ({
+    type: ActionTypes.TODO_DELETE_REQUEST
+})
+export const GroupDeleteSuccess = (groupId: string): Action => ({
+    type: ActionTypes.TODO_DELETE_SUCCESS,
+    payload: groupId
+})
+export const GroupDeleteFailure = (): Action => ({
+    type: ActionTypes.TODO_DELETE_FAILURE
+})
+
+export const createGroup = (GroupData: Omit<IGroup, 'id' | "createdAt">): AppThunk => async (dispatch) => {
+    dispatch(GroupCreateRequest());
+    
+    try {
+        const response = await createGroupRequest(GroupData);
+        if (response.success) {
+            dispatch(GroupCreateSuccess(response.data.group));
+            dispatch(ModalClose("createGroup"));
+        } else {
+            dispatch(GroupCreateFailure());
+        }
+    } catch (error) {
+        dispatch(GroupCreateFailure());
+    }
+};
 
 export const fetchGroups = (): AppThunk => async (dispatch) => {
     dispatch(groupsLoadRequest());

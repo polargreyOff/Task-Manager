@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     margin:-30px;
+    align-items: center;
 }
 
 .input {
@@ -16,4 +17,33 @@
     border-radius: 10px;
     background-color: var(--secondary-bg-color);
     color: #fff;
+}
+
+.row__item {
+    flex: 33% 0 1;
+    padding: 30px;
+}
+
+.row__content {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+    border-radius: 10px;
+    opacity: 0.2;
+}
+
+.row__title {
+    font-size: 80px;    
+}
+
+.row__content:hover {
+    opacity: 1;
+}
+
+@media (max-width: 1000px) {
+    .row__item {
+        flex: 50% 0 1;
+    }
 }

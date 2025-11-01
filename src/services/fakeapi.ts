@@ -67,6 +67,12 @@ const mockGroups: IGroup[] = [
     title: 'Спорт',
     color: '#fbba5b', 
     createdAt: new Date().toISOString(),
+  },
+  {
+    id: '7',
+    title: 'Спорт',
+    color: '#fbba5b', 
+    createdAt: new Date().toISOString(),
   }
 ];
 
@@ -249,24 +255,24 @@ export const toggleTodoRequest = async (todoId: string): Promise<ApiResponse<Tod
   );
 };
 
-// export const createGroupRequest = async (groupData: Omit<IGroup, 'id' | 'createdAt'>): Promise<ApiResponse<GroupResponse>> => {
-//   return await new Promise((resolve) =>
-//     setTimeout(() => {
-//       const newGroup: IGroup = {
-//         ...groupData,
-//         id: `group-${Date.now()}`,
-//         createdAt: new Date().toISOString(),
-//       };
-//       mockGroups.push(newGroup);
+export const createGroupRequest = async (groupData: Omit<IGroup, 'id' | "createdAt">): Promise<ApiResponse<GroupResponse>> => {
+  return await new Promise((resolve) =>
+    setTimeout(() => {
+      const newGroup: IGroup = {
+        ...groupData,
+        id: `group-${Date.now()}`,
+        createdAt: new Date().toISOString()
+      };
+      mockGroups.push(newGroup);
       
-//       resolve({
-//         success: true,
-//         data: { group: newGroup },
-//         message: 'Group created successfully'
-//       });
-//     }, 1000)
-//   );
-// };
+      resolve({
+        success: true,
+        data: { group: newGroup },
+        message: 'Group created successfully'
+      });
+    }, 1000)
+  );
+};
 
 // Todos API  
 

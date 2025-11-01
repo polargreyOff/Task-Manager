@@ -13,6 +13,9 @@ const FilterMenu = () => {
         }
         dispatch(FiltersSet("sortOrder", order))
     }
+    const handleReset = () => {
+        dispatch(FiltersReset());
+    }
     return (
         <div className={styles.filters}>
             <div className={styles.select}>
@@ -43,6 +46,9 @@ const FilterMenu = () => {
                 >
                     {sortOrder === 'asc' ? '↑' : '↓'}
                 </button>
+            </div>
+            <div className={styles.reset}>
+                <button onClick={handleReset}>Сбросить фильтры</button>
             </div>
         </div>
     )

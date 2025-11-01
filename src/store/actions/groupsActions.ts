@@ -1,5 +1,5 @@
 import { AppThunk } from "..";
-import { createGroupRequest, getGroupsRequest } from "../../services/fakeapi";
+import { createGroupRequest, deleteGroupRequest, getGroupsRequest } from "../../services/fakeapi";
 import { Action } from "../../types/actionInterfaces";
 import { ActionTypes, IGroup } from "../../types/types";
 import { ModalClose } from "./UIactions";
@@ -31,15 +31,31 @@ export const GroupCreateFailure = (): Action => ({
 })
 
 export const GroupDeleteRequest = (): Action => ({
-    type: ActionTypes.TODO_DELETE_REQUEST
+    type: ActionTypes.GROUP_DELETE_REQUEST
 })
 export const GroupDeleteSuccess = (groupId: string): Action => ({
-    type: ActionTypes.TODO_DELETE_SUCCESS,
+    type: ActionTypes.GROUP_DELETE_SUCCESS,
     payload: groupId
 })
 export const GroupDeleteFailure = (): Action => ({
-    type: ActionTypes.TODO_DELETE_FAILURE
+    type: ActionTypes.GROUP_DELETE_FAILURE
 })
+
+export const deleteGroup = (groupId: string): AppThunk => async (dispatch) => {
+    dispatch(GroupDeleteRequest());
+    
+    try {
+        const response = await deleteGroupRequest(groupId);
+
+        if (response.success) {
+            dispatch(GroupDeleteSuccess(groupId));
+        } else {
+            dispatch(GroupCreateFailure());
+        }
+    } catch(e) {
+        dispatch(GroupDeleteFailure());
+    }
+}
 
 export const createGroup = (GroupData: Omit<IGroup, 'id' | "createdAt">): AppThunk => async (dispatch) => {
     dispatch(GroupCreateRequest());

@@ -31,7 +31,7 @@ export interface TodoResponse {
   todo: ITodo;
 }
 // Фейковые данные
-const mockGroups: IGroup[] = [
+let mockGroups: IGroup[] = [
   {
     id: '1',
     title: 'Работа',
@@ -76,7 +76,7 @@ const mockGroups: IGroup[] = [
   }
 ];
 
-const mockTodos: ITodo[] = [
+let mockTodos: ITodo[] = [
   {
     id: '1',
     groupId: '1',
@@ -274,31 +274,48 @@ export const createGroupRequest = async (groupData: Omit<IGroup, 'id' | "created
   );
 };
 
-// Todos API  
-
-// export const updateTodoRequest = async (todoId: string, updates: Partial<Todo>): Promise<ApiResponse<TodoResponse>> => {
-//   return await new Promise((resolve, reject) =>
-//     setTimeout(() => {
-//       const todoIndex = mockTodos.findIndex(t => t.id === todoId);
-//       if (todoIndex !== -1) {
-//         const updatedTodo: Todo = {
-//           ...mockTodos[todoIndex],
-//           ...updates,
-//           updatedAt: new Date().toISOString(),
-//         };
-//         mockTodos[todoIndex] = updatedTodo;
+export const deleteGroupRequest = async (groupId: string): Promise<ApiResponse<{ success: boolean }>> => {
+  return await new Promise((resolve, reject) =>
+    setTimeout(() => {
+      try {
+        const groupIndex = mockGroups.findIndex(group => group.id === groupId);
         
-//         resolve({
-//           success: true,
-//           data: { todo: updatedTodo },
-//           message: 'Todo updated successfully'
-//         });
-//       } else {
-//         reject({
-//           success: false,
-//           error: 'Todo not found'
-//         });
-//       }
-//     }, 800)
-//   );
-// };
+        if (groupIndex === -1) {
+          reject({
+            success: false,
+            error: `Group with id ${groupId} not found`,
+            code: 404
+          });
+          return;
+        }
+
+        const deletedGroup = mockGroups[groupIndex];
+        
+        // Удаление группу
+        mockGroups.splice(groupIndex, 1);
+        
+        // Удаление задач группы
+        const initialTodoCount = mockTodos.length;
+        mockTodos = mockTodos.filter(todo => todo.groupId !== groupId);
+        const deletedTodosCount = initialTodoCount - mockTodos.length;
+        
+        console.log(`Deleted group: ${deletedGroup.title} and ${deletedTodosCount} related todos`);
+        
+        resolve({
+          success: true,
+          data: { success: true },
+          message: `Group "${deletedGroup.title}" and ${deletedTodosCount} related todos deleted successfully`
+        });
+        
+      } catch (error) {
+        reject({
+          success: false,
+          error: 'Internal server error',
+          code: 500
+        });
+      }
+    }, 800)
+  );
+};
+
+

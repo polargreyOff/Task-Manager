@@ -21,6 +21,10 @@ export const todosReducer =
                 
             case ActionTypes.TODO_CREATE_SUCCESS:
                 return [...state, action.payload]
+
+            case ActionTypes.GROUP_DELETE_SUCCESS:
+                console.log("todos reducer group delete")
+                return [...state.filter(todo => todo.groupId !== action.payload)]
             default:
                 return state
         }

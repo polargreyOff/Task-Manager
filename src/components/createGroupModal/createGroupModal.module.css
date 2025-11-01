@@ -13,7 +13,7 @@
 }
 
 .modal {
-    background: white;
+    background: var(--secondary-bg-color);
     padding: 2rem;
     border-radius: 8px;
     width: 90%;
@@ -34,10 +34,12 @@
 
 .formGroup input {
     width: 100%;
+    background-color: var(--main-bg-color);
     padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
+    color: #fff;
 }
 
 /* Стили для выбора цвета */
@@ -104,8 +106,8 @@
 }
 
 .buttons button[type="submit"] {
-    background: #007bff;
-    color: white;
+    background: #fff;
+    color: #000;
 }
 
 .buttons button[type="submit"]:disabled {

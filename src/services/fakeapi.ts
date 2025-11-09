@@ -30,6 +30,9 @@ export interface TodosResponse {
 export interface TodoResponse {
   todo: ITodo;
 }
+
+// let mockGroups: IGroup[] = [];
+// let mockTodos: ITodo[] = [];
 // Фейковые данные
 let mockGroups: IGroup[] = [
   {
@@ -79,49 +82,49 @@ let mockGroups: IGroup[] = [
 let mockTodos: ITodo[] = [
   {
     id: '1',
-    groupId: '1',
+    group_id: '1',
     title: 'Завершить проект',
     description: 'Доделать все задачи по проекту',
     completed: false,
     priority: 'high',
     date: new Date().toISOString(),
     color: '#dd1ade',
-    groupColor: '#ff6b6b'
+    group_color: '#ff6b6b'
   },
   {
     id: '2',
-    groupId: '1', 
+    group_id: '1', 
     title: 'Созвон с командой',
     description: 'Еженедельный созвон в 15:00',
     completed: true,
     priority: 'mid',
     date: new Date().toISOString(),
     color: '#fbba5b', 
-    groupColor: '#ff6b6b'
+    group_color: '#ff6b6b'
   },
   {
     id: '3',
-    groupId: '2',
+    group_id: '2',
     title: 'Завершить проект',
     description: 'Доделать все задачи по проекту',
     completed: false,
     priority: 'high',
     date: new Date().toISOString(),
     color: '#25e517',
-    groupColor: '#4ecdc4'
+    group_color: '#4ecdc4'
   },
   {
     id: '4',
-    groupId: '2', 
+    group_id: '2', 
     title: 'Созвон с командой',
     description: 'Еженедельный созвон в 15:00',
     completed: true,
     priority: 'mid',
     date: new Date().toISOString(),
     color: '#45b7d1',
-    groupColor: '#4ecdc4'
+    group_color: '#4ecdc4'
   }
-];
+];  
 
 // Groups API
 export const getGroupsRequest = async (): Promise<ApiResponse<GroupsResponse>> => {
@@ -159,7 +162,7 @@ export const getGroupRequest = async (groupId: string): Promise<ApiResponse<Grou
 export const getTodosRequest = async (id: string): Promise<ApiResponse<TodosResponse>> => {
   return await new Promise((resolve) =>
     setTimeout(() => {
-      const groupTodos = mockTodos.filter(todo => todo.groupId === id);
+      const groupTodos = mockTodos.filter(todo => todo.group_id === id);
       resolve({
         success: true,
         data: {
@@ -296,7 +299,7 @@ export const deleteGroupRequest = async (groupId: string): Promise<ApiResponse<{
         
         // Удаление задач группы
         const initialTodoCount = mockTodos.length;
-        mockTodos = mockTodos.filter(todo => todo.groupId !== groupId);
+        mockTodos = mockTodos.filter(todo => todo.group_id !== groupId);
         const deletedTodosCount = initialTodoCount - mockTodos.length;
         
         console.log(`Deleted group: ${deletedGroup.title} and ${deletedTodosCount} related todos`);
@@ -317,5 +320,3 @@ export const deleteGroupRequest = async (groupId: string): Promise<ApiResponse<{
     }, 800)
   );
 };
-
-

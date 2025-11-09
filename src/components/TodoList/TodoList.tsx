@@ -43,7 +43,7 @@ const TodoList = () => {
     }, [group, dispatch])
     useEffect(() => {
         if (groupId) {
-            const hasTodosForThisGroup = todos.some(todo => todo.groupId === groupId);
+            const hasTodosForThisGroup = todos.some(todo => todo.group_id === groupId);
 
             if (!hasTodosForThisGroup) {
                 dispatch(fetchTodos(groupId));
@@ -91,7 +91,7 @@ const TodoList = () => {
             </div>
 
             {modal && (
-                <CreateTodoModal groupColor={group!.color} groupId={groupId}
+                <CreateTodoModal group_color={group!.color} group_id={groupId}
                     onClose={() => { dispatch(ModalClose("createTodo")) }}
                 />
             )}

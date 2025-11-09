@@ -1,5 +1,7 @@
 import { AppThunk } from "..";
-import { createGroupRequest, deleteGroupRequest, getGroupsRequest } from "../../services/fakeapi";
+// createGroupRequest, deleteGroupRequest, getGroupsRequest
+// import { } from "../../services/fakeapi";
+import { createGroupRequest, deleteGroupRequest, getGroupsRequest } from "../../services/api";
 import { Action } from "../../types/actionInterfaces";
 import { ActionTypes, IGroup } from "../../types/types";
 import { ModalClose } from "./UIactions";

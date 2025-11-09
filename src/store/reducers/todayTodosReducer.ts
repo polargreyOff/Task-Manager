@@ -10,7 +10,7 @@ export const TodayTodosReducer =
                 return [...action.payload]
             
             case ActionTypes.GROUP_DELETE_SUCCESS:
-                return [...state.filter(todo => todo.groupId !== action.payload)]
+                return [...state.filter(todo => todo.group_id !== action.payload)]
             default:
                 return state
         }

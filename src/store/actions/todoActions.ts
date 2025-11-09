@@ -1,10 +1,13 @@
 import { Action } from "../../types/actionInterfaces";
 import { ActionTypes, ITodo } from "../../types/types";
 import { AppThunk } from "..";
-import { getTodosRequest } from "../../services/fakeapi";
-import { createTodoRequest } from "../../services/fakeapi";
+// import { getTodosRequest } from "../../services/fakeapi";
+import { getTodosRequest } from "../../services/api";
+// import { createTodoRequest } from "../../services/fakeapi";
+import { createTodoRequest } from "../../services/api";
 import { ModalClose } from "./UIactions";
-import { deleteTodoRequest } from "../../services/fakeapi";
+// import { deleteTodoRequest } from "../../services/fakeapi";
+import { deleteTodoRequest } from "../../services/api";
 
 export const TodoToggle = (id: string): Action => ({
     type: ActionTypes.TODO_TOGGLE,

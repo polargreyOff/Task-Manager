@@ -11,7 +11,7 @@ export const useAppSelector: TypedUseSelectorHook<IRootState> = useSelector;
 export const useFilteredItems = (todos: ITodo[], filters: IuiState["filters"]["todos"], groupId: string | undefined) => {
     return useMemo(() => {
         return todos.filter( todo => {
-            if (todo.groupId !== groupId) return false;
+            if (todo.group_id !== groupId) return false;
             if (filters.completed === "active" && todo.completed) return false;
             if (filters.completed === "completed" && !todo.completed) return false;
 
@@ -27,5 +27,5 @@ export const useFilteredItems = (todos: ITodo[], filters: IuiState["filters"]["t
             }
             return 0;
         })
-    }, [todos, filters])
+    }, [todos, filters, groupId])
 }

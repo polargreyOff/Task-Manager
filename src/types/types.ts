@@ -43,14 +43,14 @@ export enum ActionTypes {
 
 export interface ITodo {
     id: string;
-    groupId: string;
+    group_id: string;
     description?: string;
     title: string;
     completed: boolean;
     priority: "low" | "mid" | "high";
     date: string;
     color: string,
-    groupColor: string
+    group_color: string
 }
 
 export interface IGroup {

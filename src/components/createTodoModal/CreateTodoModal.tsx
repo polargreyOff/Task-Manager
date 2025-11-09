@@ -6,8 +6,8 @@ import styles from './CreateTodoModal.module.css';
 import { fetchTodayTodos } from '../../store/actions/todayTodosActions';
 
 interface CreateTodoModalProps {
-    groupId: string | undefined;
-    groupColor: string;
+    group_id: string | undefined;
+    group_color: string;
     onClose: () => void;
 }
 
@@ -19,14 +19,14 @@ const COLOR_PRESETS = [
 ];
 
 export const CreateTodoModal: React.FC<CreateTodoModalProps> = ({ 
-    groupId, 
-    groupColor,
+    group_id, 
+    group_color,
     onClose 
 }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState<'low' | 'mid' | 'high'>('mid');
-    const [selectedColor, setSelectedColor] = useState(groupColor);
+    const [selectedColor, setSelectedColor] = useState(group_color);
     const [dueDate, setDueDate] = useState('');
     const dispatch = useAppDispatch();
 
@@ -41,7 +41,7 @@ export const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!groupId || !title.trim()) return;
+        if (!group_id || !title.trim()) return;
 
         // Если дата не выбрана, используем завтрашнюю
         const finalDueDate = dueDate 
@@ -49,14 +49,14 @@ export const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
             : new Date(defaultDate).toISOString();
 
         dispatch(createTodo({
-            groupId,
+            group_id,
             title: title.trim(),
             description: description.trim(),
             priority,
             completed: false,
             date: finalDueDate,
             color: selectedColor,
-            groupColor
+            group_color
         }));
         dispatch(fetchTodayTodos());
 

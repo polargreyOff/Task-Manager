@@ -3,7 +3,8 @@ import { ITodo } from "../../types/types";
 import styles from "./TodoItem.module.css"
 import { useAppDispatch } from "../../hooks/hooks";
 import { TodoToggle } from "../../store/actions/todoActions";
-import { toggleTodoRequest } from "../../services/fakeapi";
+// import { toggleTodoRequest } from "../../services/fakeapi";
+import { toggleTodoRequest } from "../../services/api";
 import { deleteTodo } from "../../store/actions/todoActions";
 import { fetchTodayTodos } from "../../store/actions/todayTodosActions";
 

@@ -1,7 +1,8 @@
 import { Action } from "../../types/actionInterfaces";
 import { ActionTypes, ITodo } from "../../types/types";
 import { AppThunk } from "..";
-import { getTodayTodosRequest } from "../../services/fakeapi";
+// import { getTodayTodosRequest } from "../../services/fakeapi";
+import { getTodayTodosRequest } from "../../services/api";
 
 export const TodayTodosLoadRequest = (): Action => ({
     type: ActionTypes.TODAY_TODOS_REQUEST,
@@ -13,7 +14,7 @@ export const TodayTodosLoadSuccess = (todos: ITodo[]): Action => ({
 })
 
 export const TodayTodosLoadFailure = (): Action => ({
-    type: ActionTypes.TODOS_LOAD_FAILURE
+    type: ActionTypes.TODAY_TODOS_FAILURE
 })
 
 export const fetchTodayTodos = (): AppThunk => async (dispatch) => {

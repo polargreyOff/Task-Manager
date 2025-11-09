@@ -7,6 +7,7 @@ import styles from "./app.module.css"
 import { store } from "./store";
 import { Provider } from "react-redux";
 import MainBlock from "./components/main/main";
+import NotFound from "./components/NotFound/NotFound";
 
 const app = () => {
   return (
@@ -18,6 +19,7 @@ const app = () => {
             <Routes>
               <Route path="/" element={<MainBlock/>} />
               <Route path="/todoList/:id" element={<TodoList />} />
+              <Route path="*" element={<NotFound/>}/>
             </Routes>
           </div>
           <Footer />

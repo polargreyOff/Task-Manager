@@ -31,8 +31,18 @@ export const getTodosByGroupController = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
+    const userId = req.user?.userId;
 
-    const todos = await getTodosByGroup(id);
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+      return;
+    }
+
+    // Передаем userId в query для фильтрации
+    const todos = await getTodosByGroup(id, userId);
 
     res.json({
       success: true,
@@ -53,7 +63,17 @@ export const getTodayTodosController = async (
   res: Response<ApiResponse<TodosResponse>>
 ): Promise<void> => {
   try {
-    const todos = await getTodayTodos();
+    const userId = req.user?.userId;
+    
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+      return;
+    }
+
+    const todos = await getTodayTodos(userId); // ← Передаем userId
 
     res.json({
       success: true,
@@ -92,16 +112,27 @@ export const createTodoController = async (
       return;
     }
 
-    // Создаем задачу в БД
+    // Используем userId из JWT токена!
+    const userId = req.user?.userId;
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+      return;
+    }
+
+    // Создаем задачу с реальным userId
     const newTodo = await createTodo({
       group_id,
       title: title.trim(),
       description: description?.trim(),
       priority: priority || 'mid',
+      completed: false,
       date: date || new Date().toISOString(),
       color: color || '#ffffff',
-      completed: false,
-      user_id: '00000000-0000-0000-0000-000000000000' // временно
+      user_id: userId // ← Используем реальный userId
     });
 
     const response: ApiResponse<TodoResponse> = {
@@ -127,8 +158,18 @@ export const getTodoController = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
+    const userId = req.user?.userId;
 
-    const todo = await getTodoById(id);
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+      return;
+    }
+
+    // Передаем userId в query для проверки принадлежности
+    const todo = await getTodoById(id, userId);
 
     if (!todo) {
       res.status(404).json({

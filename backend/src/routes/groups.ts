@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import { createGroupController, getGroupsController, getGroupController, deleteGroupController} from '../controllers/groupsController';
+import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
+
+router.use(authenticateToken);
 
 // POST /api/groups - создание группы
 router.post('/', createGroupController);

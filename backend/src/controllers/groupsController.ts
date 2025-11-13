@@ -29,14 +29,24 @@ export const createGroupController = async (
       return;
     }
 
-    // Создаем группу в БД
+    // Используем userId из JWT токена!
+    const userId = req.user?.userId; // ← Теперь берем из аутентифицированного пользователя
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: 'User not authenticated'
+      });
+      return;
+    }
+
+    // Создаем группу с реальным userId
     const newGroup = await createGroup({
       title,
       color,
-      user_id: '00000000-0000-0000-0000-000000000000' // временно
+      user_id: userId // ← Используем реальный userId
     });
 
-    // Форматируем ответ как на фронте
     const response: ApiResponse<GroupResponse> = {
       success: true,
       data: { group: newGroup },
@@ -58,7 +68,17 @@ export const getGroupsController = async (
   res: Response<ApiResponse<{ groups: any[] }>>
 ): Promise<void> => {
   try {
-    const groups = await getAllGroups();
+    const userId = req.user?.userId;
+    
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: 'User not authenticated'
+      });
+      return;
+    }
+
+    const groups = await getAllGroups(userId);
     
     res.json({
       success: true,
@@ -80,8 +100,18 @@ export const getGroupController = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
+    const userId = req.user?.userId;
 
-    const group = await getGroupById(id);
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+      return;
+    }
+
+    // Передаем userId в query для проверки принадлежности
+    const group = await getGroupById(id, userId);
 
     if (!group) {
       res.status(404).json({

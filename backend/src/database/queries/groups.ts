@@ -3,7 +3,6 @@ import { IGroup, CreateGroupRequest } from '../../types';
 
 export const createGroup = async (groupData: CreateGroupRequest): Promise<IGroup> => {
   // Временно используем фиксированный user_id, пока нет авторизации
-  const tempUserId = '00000000-0000-0000-0000-000000000000'; // временный UUID
   
   const query = `
     INSERT INTO groups (user_id, title, color)
@@ -11,24 +10,32 @@ export const createGroup = async (groupData: CreateGroupRequest): Promise<IGroup
     RETURNING *
   `;
   
-  const values = [tempUserId, groupData.title, groupData.color];
+  const values = [groupData.user_id, groupData.title, groupData.color];
   const result = await pool.query(query, values);
   return result.rows[0];
 };
 
-export const getAllGroups = async (): Promise<IGroup[]> => {
-  const query = `SELECT * FROM groups ORDER BY created_at DESC`;
-  const result = await pool.query(query);
+export const getAllGroups = async (userId: string): Promise<IGroup[]> => {
+  const query = `SELECT * FROM groups WHERE user_id = $1 ORDER BY created_at DESC`;
+  const result = await pool.query(query, [userId]); // ← Фильтруем по пользователю
   return result.rows;
 };
 
-export const getGroupById = async (id: string): Promise<IGroup | null> => {
-  const query = `SELECT * FROM groups WHERE id = $1`;
-  const result = await pool.query(query, [id]);
+export const getGroupById = async (id: string, userId?: string): Promise<IGroup | null> => {
+  let query = `SELECT * FROM groups WHERE id = $1`;
+  let values: any[] = [id];
+  
+  // Если передан userId, проверяем что группа принадлежит пользователю
+  if (userId) {
+    query += ` AND user_id = $2`;
+    values.push(userId);
+  }
+  
+  const result = await pool.query(query, values);
   return result.rows[0] || null;
 };
 
-export const deleteGroup = async (groupId: string): Promise<{ 
+export const deleteGroup = async (groupId: string, userId?: string): Promise<{ 
   deletedGroup: IGroup | null;
   deletedTodosCount: number;
 }> => {
@@ -37,8 +44,16 @@ export const deleteGroup = async (groupId: string): Promise<{
   try {
     await client.query('BEGIN');
 
-    // 1. Находим группу перед удалением (для ответа)
-    const groupResult = await client.query('SELECT * FROM groups WHERE id = $1', [groupId]);
+    // Находим группу (с проверкой пользователя если нужно)
+    let groupQuery = 'SELECT * FROM groups WHERE id = $1';
+    let groupValues: any[] = [groupId];
+    
+    if (userId) {
+      groupQuery += ' AND user_id = $2';
+      groupValues.push(userId);
+    }
+    
+    const groupResult = await client.query(groupQuery, groupValues);
     const group = groupResult.rows[0] || null;
 
     if (!group) {
@@ -46,14 +61,14 @@ export const deleteGroup = async (groupId: string): Promise<{
       return { deletedGroup: null, deletedTodosCount: 0 };
     }
 
-    // 2. Считаем сколько задач будет удалено (для логов)
+    // Считаем задачи (они удалятся каскадно)
     const todosCountResult = await client.query(
       'SELECT COUNT(*) FROM todos WHERE group_id = $1',
       [groupId]
     );
     const deletedTodosCount = parseInt(todosCountResult.rows[0].count);
 
-    // 3. Удаляем группу (каскадно удалятся все задачи благодаря ON DELETE CASCADE)
+    // Удаляем группу
     await client.query('DELETE FROM groups WHERE id = $1', [groupId]);
 
     await client.query('COMMIT');

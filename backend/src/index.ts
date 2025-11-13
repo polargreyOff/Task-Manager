@@ -2,8 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import { testConnection } from "./database/db";
 
-import groupsRouter from './routes/groups';
+import groupsRouter from "./routes/groups";
 import todosRouter from "./routes/todos";
+import authRouter from './routes/auth';
 import cors from "cors";    
 
 dotenv.config();
@@ -29,8 +30,15 @@ console.log('PORT:', process.env.PORT);
 
 app.use(express.json());
 
+// Отладка
+app.use((req, res, next) => {
+  console.log(`📨 ${req.method} ${req.path}`);
+  next();
+});
+
 app.use("/api/groups", groupsRouter);
 app.use("/api/todos", todosRouter);
+app.use("/api/auth", authRouter);
 
 const startServer = async () => {
   try {

@@ -7,8 +7,12 @@ import {
   deleteTodoController,
   toggleTodoController
 } from '../controllers/todosController';
+import { authenticateToken } from '../middleware/auth';
+
 
 const router = Router();
+
+router.use(authenticateToken);  
 
 // GET /api/todos/today - получение сегодняшних задач
 router.get('/today', getTodayTodosController);

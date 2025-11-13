@@ -2,10 +2,20 @@ import { pool } from '../db';
 import { ITodo, CreateTodoRequest } from '../../types';
 import { formatDateForDB, getTodayDate } from '../../utils/index';
 
-export const getTodosByGroup = async (groupId: string): Promise<ITodo[]> => {
-  const query = `
+export const getTodosByGroup = async (groupId: string, userId?: string): Promise<ITodo[]> => {
+  let query = `
     SELECT * FROM todos 
     WHERE group_id = $1 
+  `;
+  let values: any[] = [groupId];
+  
+  // Если передан userId, проверяем что задачи принадлежат пользователю
+  if (userId) {
+    query += ` AND user_id = $2`;
+    values.push(userId);
+  }
+  
+  query += `
     ORDER BY 
       CASE priority 
         WHEN 'high' THEN 1 
@@ -15,11 +25,12 @@ export const getTodosByGroup = async (groupId: string): Promise<ITodo[]> => {
       created_at DESC
   `;
   
-  const result = await pool.query(query, [groupId]);
+  const result = await pool.query(query, values);
   return result.rows;
 };
 
-export const getTodayTodos = async (): Promise<ITodo[]> => {
+
+export const getTodayTodos = async (userId: string): Promise<ITodo[]> => {
   const today = getTodayDate();
   
   const query = `
@@ -28,7 +39,7 @@ export const getTodayTodos = async (): Promise<ITodo[]> => {
       g.color as group_color
     FROM todos t
     LEFT JOIN groups g ON t.group_id = g.id
-    WHERE t.date = $1
+    WHERE t.user_id = $1 AND t.date = $2
     ORDER BY 
       CASE t.priority 
         WHEN 'high' THEN 1 
@@ -38,12 +49,13 @@ export const getTodayTodos = async (): Promise<ITodo[]> => {
       t.created_at DESC
   `;
   
-  const result = await pool.query(query, [today]);
+  const result = await pool.query(query, [userId, today]);
   return result.rows;
 };
 
 export const createTodo = async (todoData: CreateTodoRequest): Promise<ITodo> => {
   const {
+    user_id,
     group_id,
     title,
     description,
@@ -52,9 +64,6 @@ export const createTodo = async (todoData: CreateTodoRequest): Promise<ITodo> =>
     color
   } = todoData;
 
-  // Используем временного пользователя (как в группах)
-  const tempUserId = '00000000-0000-0000-0000-000000000000';
-
   const query = `
     INSERT INTO todos (user_id, group_id, title, description, priority, date, color, completed)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -62,7 +71,7 @@ export const createTodo = async (todoData: CreateTodoRequest): Promise<ITodo> =>
   `;
   
   const values = [
-    tempUserId,
+    user_id,
     group_id,
     title,
     description || null,
@@ -76,8 +85,8 @@ export const createTodo = async (todoData: CreateTodoRequest): Promise<ITodo> =>
   return result.rows[0];
 };
 
-export const getTodoById = async (id: string): Promise<ITodo | null> => {
-  const query = `
+export const getTodoById = async (id: string, userId?: string): Promise<ITodo | null> => {
+  let query = `
     SELECT 
       t.*,
       g.color as group_color
@@ -85,27 +94,45 @@ export const getTodoById = async (id: string): Promise<ITodo | null> => {
     LEFT JOIN groups g ON t.group_id = g.id
     WHERE t.id = $1
   `;
+  let values: any[] = [id];
   
-  const result = await pool.query(query, [id]);
+  if (userId) {
+    query += ` AND t.user_id = $2`;
+    values.push(userId);
+  }
+  
+  const result = await pool.query(query, values);
   return result.rows[0] || null;
 };
 
-export const deleteTodo = async (todoId: string): Promise<boolean> => {
-  const query = 'DELETE FROM todos WHERE id = $1';
-  const result = await pool.query(query, [todoId]);
+export const deleteTodo = async (todoId: string, userId?: string): Promise<boolean> => {
+  let query = 'DELETE FROM todos WHERE id = $1';
+  let values: any[] = [todoId];
   
-  // Если affected rows > 0, значит задача была удалена
+  if (userId) {
+    query += ' AND user_id = $2';
+    values.push(userId);
+  }
+  
+  const result = await pool.query(query, values);
   return result.rowCount! > 0;
 };
 
-export const toggleTodo = async (todoId: string): Promise<ITodo | null> => {
-  const query = `
+export const toggleTodo = async (todoId: string, userId?: string): Promise<ITodo | null> => {
+  let query = `
     UPDATE todos 
     SET completed = NOT completed, updated_at = CURRENT_TIMESTAMP 
-    WHERE id = $1 
-    RETURNING *
+    WHERE id = $1
   `;
+  let values: any[] = [todoId];
   
-  const result = await pool.query(query, [todoId]);
+  if (userId) {
+    query += ' AND user_id = $2';
+    values.push(userId);
+  }
+  
+  query += ' RETURNING *';
+  
+  const result = await pool.query(query, values);
   return result.rows[0] || null;
 };

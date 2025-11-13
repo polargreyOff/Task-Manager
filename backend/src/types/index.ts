@@ -5,6 +5,7 @@ export interface IUser {
   password_hash: string;
   created_at: string;
   updated_at: string;
+  refresh_token?: string
 }
 
 export interface IGroup {

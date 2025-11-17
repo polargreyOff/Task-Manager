@@ -8,6 +8,9 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import MainBlock from "./components/main/main";
 import NotFound from "./components/NotFound/NotFound";
+import { Login } from "./components/Login/Login";
+import { ProtectedRoute } from "./components/protectedRoute/ProtectedRoute";
+import { Register } from "./components/register/Register";
 
 const app = () => {
   return (
@@ -17,8 +20,18 @@ const app = () => {
           <Header />
           <div className={styles.mainContent}>
             <Routes>
-              <Route path="/" element={<MainBlock/>} />
-              <Route path="/todoList/:id" element={<TodoList />} />
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <MainBlock/>
+                </ProtectedRoute>
+                } />
+              <Route path="/todoList/:id" element={
+                <ProtectedRoute>
+                  <TodoList />
+                </ProtectedRoute>
+                } />
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/register" element={<Register/>}/>
               <Route path="*" element={<NotFound/>}/>
             </Routes>
           </div>

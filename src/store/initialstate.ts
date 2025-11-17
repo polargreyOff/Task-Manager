@@ -1,6 +1,12 @@
 import { IRootState } from "../types/types";
 
 export const initialState: IRootState ={
+    auth: {
+        isAuthenticated: false,
+        loading: false,
+        username: "",
+        error: false
+    },
     todos: [],
     groups: [],
     todayTodos: [],

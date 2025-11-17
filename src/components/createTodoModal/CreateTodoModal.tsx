@@ -58,7 +58,6 @@ export const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
             color: selectedColor,
             group_color
         }));
-        dispatch(fetchTodayTodos());
 
         onClose();
     };

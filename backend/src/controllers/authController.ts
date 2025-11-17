@@ -210,3 +210,49 @@ export const refreshToken = async (req: Request, res: Response): Promise<void> =
     });
   }
 };
+
+// Получение профиля пользователя
+export const getProfile = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+      return;
+    }
+
+    // Получаем полную информацию о пользователе
+    const user = await findUserById(userId);
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+      return;
+    }
+
+    // Возвращаем профиль без sensitive данных
+    res.json({
+      success: true,
+      data: {
+        user: {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          created_at: user.created_at,
+          last_login: user.last_login
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Get profile error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to get profile'
+    });
+  }
+};

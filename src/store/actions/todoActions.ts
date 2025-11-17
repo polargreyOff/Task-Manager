@@ -8,6 +8,7 @@ import { createTodoRequest } from "../../services/api";
 import { ModalClose } from "./UIactions";
 // import { deleteTodoRequest } from "../../services/fakeapi";
 import { deleteTodoRequest } from "../../services/api";
+import { fetchTodayTodos } from "./todayTodosActions";
 
 export const TodoToggle = (id: string): Action => ({
     type: ActionTypes.TODO_TOGGLE,
@@ -72,6 +73,10 @@ export const createTodo = (todoData: Omit<ITodo, 'id'>): AppThunk => async (disp
         const response = await createTodoRequest(todoData);
         if (response.success) {
             dispatch(TodoCreateSuccess(response.data.todo));
+            if (response.data.todo.date) {
+                // тут нужна проверка что дата сегодняшняя, для оптимизации запросов
+                dispatch(fetchTodayTodos())
+            }
             dispatch(ModalClose("createTodo"));
         } else {
             dispatch(TodoCreateFailure());

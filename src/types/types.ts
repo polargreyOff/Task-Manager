@@ -39,6 +39,15 @@ export enum ActionTypes {
     MODAL_OPEN = 'MODAL_OPEN',
     MODAL_CLOSE = 'MODAL_CLOSE',
     TODAY_TODOS_UPDATE = 'TODAY_TODOS_UPDATE',
+
+    // AUTH
+    LOGIN_REQUEST = "LOGIN_REQUEST",
+    LOGIN_SUCCESS = "LOGIN_SUCCESS",
+    LOGIN_FAILURE = "LOGIN_FAILURE",
+    REGISTER_REQUEST = "REGISTER_REQUEST",
+    REGISTER_SUCCESS = "REGISTER_SUCCESS",
+    REGISTER_FAILURE = "REGISTER_FAILURE",
+    LOGOUT = "LOGOUT"
 }
 
 export interface ITodo {
@@ -93,11 +102,17 @@ export interface IuiState {
     };
 }
 
-
+export interface IAuth {
+    isAuthenticated: boolean;
+    loading: boolean;
+    username?: string;
+    error: boolean;
+}
 
 export interface IRootState {
     todos: ITodo[];
     groups: IGroup[];
     todayTodos: ITodo[];
-    UIstate: IuiState
+    UIstate: IuiState;
+    auth: IAuth
 }

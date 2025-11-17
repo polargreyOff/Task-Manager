@@ -119,6 +119,32 @@ interface FilterReset {
     type: ActionTypes.FILTERS_RESET
 }
 
+interface LoginRequest {
+    type: ActionTypes.LOGIN_REQUEST
+}
+interface LoginSuccess {
+    type: ActionTypes.LOGIN_SUCCESS,
+    payload: string
+}
+interface LoginFailure {
+    type: ActionTypes.LOGIN_FAILURE
+}
+
+interface RegisterRequest {
+    type: ActionTypes.REGISTER_REQUEST
+}
+interface RegisterSuccess {
+    type: ActionTypes.REGISTER_SUCCESS,
+    payload: string
+}
+interface RegisterFailure {
+    type: ActionTypes.REGISTER_FAILURE
+}
+
+interface Logout {
+    type: ActionTypes.LOGOUT
+}
+
 export type Action = 
   GroupsLoadSuccessAction 
 | GroupsLoadRequestAction
@@ -146,3 +172,10 @@ export type Action =
 | GroupDeleteRequest
 | GroupDeleteSuccess
 | GroupDeleteFailure
+| LoginRequest
+| LoginSuccess
+| LoginFailure
+| RegisterRequest
+| RegisterFailure
+| RegisterSuccess
+| Logout
